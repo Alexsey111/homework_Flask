@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Случайные цитаты</h1>
+    <div class="text-center mb-4">
+        <button class="btn btn-primary" id="get-quote">Цитаты</button>
+    </div>
+    <div class="text-center" id="quote-container">
+        <blockquote class="blockquote">
+            <p class="mb-0" id="quote-text"></p>
+            <footer class="blockquote-footer" id="quote-author"></footer>
+        </blockquote>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.getElementById('get-quote').addEventListener('click', function() {
+        fetch('/quote')
+            .then(response => response.json())
+            .then(data => {
+                if (data.content) {
+                    document.getElementById('quote-text').textContent = data.content;
+                    document.getElementById('quote-author').textContent = data.author;
+                } else {
+                    document.getElementById('quote-text').textContent = "Could not fetch quote.";
+                    document.getElementById('quote-author').textContent = "";
+                }
+            });
+    });
+</script>
+</body>
+</html>
+
